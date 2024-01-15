@@ -4,7 +4,11 @@ import 'package:todo/ToDoModel.dart';
 class ToDoDataBase {
   List<ToDoModel> TodoList = [] ;
   final _mybox = Hive.box("mybox");
-  
+
+  ToDoDataBase(){
+    // loadDataBase();
+  }
+
   void loadDataBase(){
     // TodoList = _mybox.get("todo");
 

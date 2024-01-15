@@ -24,7 +24,9 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     tddb.loadDataBase();
+    print(tddb.TodoList);
     _foundToDo = tddb.TodoList;
+    print("heyyyyyy");
     super.initState();
   }
 
