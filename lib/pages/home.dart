@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   List _foundToDo = [];
   final _addController = TextEditingController();
 
-  // final _mybox = Hive.box<ToDoModel>("mybox");
+  final _mybox = Hive.box("mybox");
   ToDoDataBase tddb = ToDoDataBase();
 
   @override

@@ -2,8 +2,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/ToDoModel.dart';
 
 class ToDoDataBase {
-  List TodoList = [] ;
-  final _mybox = Hive.box<ToDoModel>("mybox");
+  List<ToDoModel> TodoList = [] ;
+  final _mybox = Hive.box("mybox");
   
   void loadDataBase(){
     // TodoList = _mybox.get("todo");
@@ -27,6 +27,12 @@ class ToDoDataBase {
 
     print(_mybox.toString());
     print(TodoList);
+  }
+
+  void addTODB(ToDoModel todo){
+
+    _mybox.add(todo);
+
   }
 
 }

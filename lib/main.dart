@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todo/ToDoModel.dart';
 import 'package:todo/pages/home.dart';
-import 'package:hive_flutter/hive_flutter.dart ';
+import 'package:hive/hive.dart';
 
 void main() async{
 
-  await Hive.initFlutter();
-  //Hive.registerAdapter(ToDoModelAdapter());
+  Hive.init("path");
+  Hive.registerAdapter(ToDoModelAdapter());
   var box = await Hive.openBox("mybox");
 
   // box.put("hh",ToDoModel(id: "88", Text: "468468468"));
