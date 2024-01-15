@@ -1,5 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo/ToDoDataBase.dart';
 import 'package:todo/ToDoModel.dart';
 import 'package:todo/ToDoItem.dart';
 import 'package:todo/myColors.dart';
@@ -12,14 +13,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final myLst = ToDoModel.myList;
-  List<ToDoModel> _foundToDo = [];
+  //final myLst = ToDoModel.myList;
+  List _foundToDo = [];
   final _addController = TextEditingController();
+
+  // final _mybox = Hive.box<ToDoModel>("mybox");
+  ToDoDataBase tddb = ToDoDataBase();
 
   @override
   void initState() {
     // TODO: implement initState
-    _foundToDo = myLst;
+    tddb.loadDataBase();
+    _foundToDo = tddb.TodoList;
     super.initState();
   }
 
@@ -117,38 +122,45 @@ class _HomeState extends State<Home> {
   void _handleToDoChange(ToDoModel todoo) {
     setState(() {
       todoo.isDone = !todoo.isDone;
+      tddb.updateDataBase();
     });
   }
 
   void _deleteToDoItem(String id) {
     setState(() {
-      myLst.removeWhere((item) => item.id == id);
+      tddb.TodoList.removeWhere((item) => item.id == id);
+      tddb.updateDataBase();
+      
     });
   }
 
   void _addToDoItem(String text) {
-    
     if (text.isNotEmpty) {
       setState(() {
-      myLst.add(
-          ToDoModel(id: DateTime.now().millisecond.toString(), Text: text));
-    });
+        tddb.TodoList.add(
+            ToDoModel(id: DateTime.now().millisecond.toString(), Text: text));
+      });
     }
+
+    tddb.updateDataBase();
+    //tddb.loadDataBase();
 
     _addController.clear();
   }
 
-  void _runFilter(String myFilter){
-    List<ToDoModel> results= [];
+  void _runFilter(String myFilter) {
+    List results = [];
 
     if (myFilter.isEmpty) {
-      results = myLst;
-    }else{
-        results = myLst.where((element) => element.Text!.toLowerCase().contains(myFilter.toLowerCase())).toList();
+      results = tddb.TodoList;
+    } else {
+      results = tddb.TodoList.where((element) =>
+              element.Text!.toLowerCase().contains(myFilter.toLowerCase()))
+          .toList();
     }
 
     setState(() {
-      _foundToDo = results ;
+      _foundToDo = results;
     });
   }
 

@@ -1,6 +1,13 @@
+import 'package:hive/hive.dart';
+part 'ToDoModel.g.dart';
+
+@HiveType(typeId: 0)
 class ToDoModel {
+  @HiveField(0)
   String? id;
+  @HiveField(1)
   String? Text;
+  @HiveField(2,defaultValue: false)
   bool isDone;
 
   ToDoModel({
@@ -9,10 +16,4 @@ class ToDoModel {
     this.isDone = false,
   });
 
-  static List<ToDoModel> myList = [
-    ToDoModel(id: "1", Text: "Text",isDone: false),
-    ToDoModel(id: "2", Text: " 2222222222",isDone: true),
-    ToDoModel(id: "3", Text: "asdsadasd"),
-    ToDoModel(id: "3", Text: "sajsas"),
-  ];
 }
